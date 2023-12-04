@@ -22,7 +22,7 @@ contract IPFSManager is FunctionsClient, Ownable, IIPFSManager {
     // The AdsManager contract to interact with.
     IAdsManager public adsManager;
 
-    // Subscription ID for Chainlink VRF.
+    // Subscription ID for Chainlink Functions.
     uint64 public subscriptionId = 1515;
 
     // Encrypted secrets for secure data transmission.
@@ -139,7 +139,7 @@ contract IPFSManager is FunctionsClient, Ownable, IIPFSManager {
      * @dev Creates metadata (NFT or contract) based on the provided arguments.
      * @param contractOrToken Boolean indicating whether to update contract or NFT source.
      * @param args Array of string arguments for metadata creation.
-     * @return requestId The ID of the Chainlink VRF request.
+     * @return requestId The ID of the Chainlink Functions request.
      */
     function createMetadata(
         bool contractOrToken,
@@ -156,7 +156,7 @@ contract IPFSManager is FunctionsClient, Ownable, IIPFSManager {
         req.addSecretsReference(encryptedSecretsUrls);
         req.setArgs(args);
 
-        // Sends the request and obtains the Chainlink VRF request ID.
+        // Sends the request and obtains the Chainlink Functions request ID.
         bytes32 requestId = _sendRequest(
             req.encodeCBOR(),
             subscriptionId,
@@ -205,7 +205,7 @@ contract IPFSManager is FunctionsClient, Ownable, IIPFSManager {
     }
 
     /**
-     * @dev Updates the subscription ID for Chainlink VRF.
+     * @dev Updates the subscription ID for Chainlink Functions.
      * @param subscriptionId_ The new subscription ID.
      */
     function updateSubscriptionId(uint64 subscriptionId_) external onlyOwner {

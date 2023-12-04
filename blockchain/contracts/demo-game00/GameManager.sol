@@ -8,6 +8,15 @@ import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
+/**
+ * @title GameManager
+ * @author Andrea Tedesco (@andreatedesco).
+ * @dev This contract represents a game manager that facilitates the automated distribution
+ * of ERC721 non-fungible tokens (NFTs) to the winner of a challenge. The challenge has a specified
+ * end date, and the contract utilizes Chainlink Functions to determine
+ * the winner based on certain game statistics.
+ */
+
 contract GameManager is
     Ownable,
     ERC721Holder,
@@ -20,16 +29,20 @@ contract GameManager is
     //                           STATE VARIABLES
     // =============================================================
 
+    // Address of the winner of the challenge.
     address public winner;
 
-    uint256 public endDate = 1703084400;
-    
+    // End date for the challenge in UNIX timestamp format (20 December 2023 16:00:00 GMT).
+    uint256 public endDate = 1703088000;
+
+    // Flag indicating whether NFTs have been sent.
     bool public nftsSended;
-    
+
+    // ERC721 contract instance representing the NFT factory.
     IERC721 public factory =
         IERC721(0xD8bdB0e3832607451e351Fd2CE8A805e2653598d);
 
-    // Subscription ID for Chainlink VRF.
+    // Subscription ID for Chainlink Functions.
     uint64 public subscriptionId = 1515;
 
     // Encrypted secrets for secure data transmission.
@@ -49,7 +62,7 @@ contract GameManager is
     // Mapping to store errors for each request.
     mapping(bytes32 => bytes) public errors;
 
-    // JavaScript source code for NFT creation.
+    // JavaScript source code for obtaining the winner.
     string private _source =
         "const titleId = '3EA44';"
         "const statisticName = 'enemiesKilled';"
@@ -88,14 +101,12 @@ contract GameManager is
     //                               EVENTS
     // =============================================================
 
-    // event Response(bytes32 requestId, string ipfsUri, bytes errors);
-
-    // =============================================================
-    //                               ERRORS
-    // =============================================================
-
-    // Error for unauthorized sender.
-    // error UnauthorizedSender();
+    /**
+     * @dev Emitted when a challenge is successfully fulfilled.
+     * @param winner The address of the participant who successfully completed the challenge.
+     * @param errors Any errors that occurred during the fulfillment process.
+     */
+    event ChallengeFulfilled(address winner, bytes errors);
 
     // =============================================================
     //                          CONSTRUCTOR
@@ -104,10 +115,7 @@ contract GameManager is
     /**
      * @dev Constructor that sets the router address and initializes FunctionsClient.
      */
-    constructor(
-    ) FunctionsClient(router) Ownable(_msgSender()) {
-        // endDate = endDate_ + 5 minutes; //[TEST]
-    }
+    constructor() FunctionsClient(router) Ownable(_msgSender()) {}
 
     function checkUpkeep(
         bytes calldata /* checkData */
@@ -127,7 +135,7 @@ contract GameManager is
     }
 
     /**
-     * @dev TODO
+     * @dev Initiates the process of sending NFTs to the winner.
      */
     function _sendRequest() private {
         nftsSended = true;
@@ -137,7 +145,7 @@ contract GameManager is
         req.initializeRequestForInlineJavaScript(_source);
         req.addSecretsReference(encryptedSecretsUrls);
 
-        // Sends the request and obtains the Chainlink VRF request ID.
+        // Sends the request and obtains the Chainlink Functions request ID.
         _sendRequest(req.encodeCBOR(), subscriptionId, gasLimit, donId);
     }
 
@@ -146,7 +154,10 @@ contract GameManager is
     // =============================================================
 
     /**
-     * @dev TODO
+     * @dev Fulfills the Chainlink Functions request, transfers NFTs to the winner, and logs errors.
+     * @param requestId The Chainlink Functions request ID.
+     * @param response The response containing the winner's information.
+     * @param err The error message, if any.
      */
     function fulfillRequest(
         bytes32 requestId,
@@ -156,38 +167,62 @@ contract GameManager is
         errors[requestId] = err;
         winner = _toAddress(string(response));
 
+        // Transfers NFTs to the winner.
         factory.safeTransferFrom(address(this), winner, 0);
         factory.safeTransferFrom(address(this), winner, 1);
         factory.safeTransferFrom(address(this), winner, 2);
         factory.safeTransferFrom(address(this), winner, 3);
 
-        // emit Response(requestId, ipfsUri, err);
+        emit ChallengeFulfilled(winner, err);
     }
 
+    /**
+     * @dev Converts a hex string to an address.
+     * @param s The hex string.
+     * @return tempAddress The converted address.
+     */
     function _toAddress(string memory s) private pure returns (address) {
         bytes memory _bytes = _hexStringToAddress(s);
         require(_bytes.length >= 1 + 20, "Out of bounds");
         address tempAddress;
 
         assembly {
-            tempAddress := div(mload(add(add(_bytes, 0x20), 1)), 0x1000000000000000000000000)
+            tempAddress := div(
+                mload(add(add(_bytes, 0x20), 1)),
+                0x1000000000000000000000000
+            )
         }
 
         return tempAddress;
     }
 
-    function _hexStringToAddress(string memory s) private pure returns (bytes memory) {
+    /**
+     * @dev Converts a hex string to bytes.
+     * @param s The hex string.
+     * @return r The converted bytes.
+     */
+    function _hexStringToAddress(
+        string memory s
+    ) private pure returns (bytes memory) {
         bytes memory ss = bytes(s);
-        require(ss.length%2 == 0); // length must be even
-        bytes memory r = new bytes(ss.length/2);
-        for (uint i=0; i<ss.length/2; ++i) {
-            r[i] = bytes1(_fromHexChar(uint8(ss[2*i])) * 16 +
-                        _fromHexChar(uint8(ss[2*i+1])));
+        require(ss.length % 2 == 0); // length must be even
+        bytes memory r = new bytes(ss.length / 2);
+        for (uint i = 0; i < ss.length / 2; ++i) {
+            r[i] = bytes1(
+                _fromHexChar(uint8(ss[2 * i])) *
+                    16 +
+                    _fromHexChar(uint8(ss[2 * i + 1]))
+            );
         }
 
         return r;
     }
 
+    /**
+     * @dev Converts a hex character to a uint8.
+     * @param c The hex character.
+     * @return The converted uint8 value.
+     */
     function _fromHexChar(uint8 c) private pure returns (uint8) {
         if (bytes1(c) >= bytes1('0') && bytes1(c) <= bytes1('9')) {
             return c - uint8(bytes1('0'));
@@ -206,21 +241,23 @@ contract GameManager is
     // =============================================================
 
     /**
-     * @dev TODO
+     * @dev Updates the NFT factory contract address.
+     * @param factory_ The new NFT factory contract address.
      */
     function updateFactory(address factory_) external onlyOwner {
         factory = IERC721(factory_);
     }
 
     /**
-     * @dev TODO
+     * @dev Updates the end date for the challenge.
+     * @param endDate_ The new end date in UNIX timestamp format.
      */
     function updateEndDate(uint256 endDate_) external onlyOwner {
         endDate = endDate_;
     }
 
     /**
-     * @dev Updates the subscription ID for Chainlink VRF.
+     * @dev Updates the subscription ID for Chainlink Functions.
      * @param subscriptionId_ The new subscription ID.
      */
     function updateSubscriptionId(uint64 subscriptionId_) external onlyOwner {
@@ -265,9 +302,7 @@ contract GameManager is
      * @dev Updates the source code for metadata creation.
      * @param source_ The new source code.
      */
-    function updateSource(
-        string memory source_
-    ) external onlyOwner {
+    function updateSource(string memory source_) external onlyOwner {
         _source = source_;
     }
 
@@ -275,6 +310,9 @@ contract GameManager is
     //                              TEST
     // =============================================================
 
+    /**
+     * @dev Initiates the process of sending NFTs for testing purposes.
+     */
     function sendRequest() public onlyOwner {
         _sendRequest();
     }
