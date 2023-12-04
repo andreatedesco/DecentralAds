@@ -9,11 +9,11 @@ async function main() {
 
   // ================================================ //
 
-  const deployAdsGatewayContracts = false;
-  const deployIPFSManagerContract = false;
-  const deployLotteryManagerContract = false;
-  const deployPriceFeedManagerContract = false;
-  const deployAdsManagerContracts = false;
+  const deployAdsGatewayContracts = true;
+  const deployIPFSManagerContract = true;
+  const deployLotteryManagerContract = true;
+  const deployPriceFeedManagerContract = true;
+  const deployAdsManagerContracts = true;
 
   const updateIPFSManager = false;
   const updatePriceFeedManager = false;
@@ -38,11 +38,11 @@ async function main() {
   // ================================================ //
 
   // fuji
-  var adsGatewayAddress = "0x094Ad3B7aC5554F652Fe7b6F7715a9369cDd0f9b";
-  var adsIPFSManagerAddress = "0x3455c15A32a8b9BCF8a1004B6e50F5577B74E74a";
-  var adsLotteryManagerAddress = "0x4E32c44974E87Ded81bd99Ec1DBA1Ec8CF0b0b68";
-  var adsPriceFeedManagerAddres = "0x5c453312E5A0d9Fd0D829F064A26DaacE25f70fF";
-  var adsManagerAddress = "0x020721c22F23fD8b824Fbb0D57d347933aFb3914";
+  var adsGatewayAddress = "0x6e5aAF894dB46732BABFb44Bb8FC7D9052B2E7eB";
+  var adsIPFSManagerAddress = "0xa2E386d7a0008CE873101d461699890F31bE6D88";
+  var adsLotteryManagerAddress = "0xB1D899966c6A5BB4c318A0D7750CE96eD83C0128";
+  var adsPriceFeedManagerAddres = "0xbC61427f46F928C2e94A39B5c024381d0A36314c";
+  var adsManagerAddress = "0x809Ac5D87560ef10dda69A9317688A4A61e8C56e";
 
   var adsFactoryAddress = "0x5f40A5B3d486432f51718E5aCc2668B987d44dA5";
   

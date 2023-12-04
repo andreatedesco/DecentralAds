@@ -10,7 +10,7 @@ import "./interfaces/IIPFSManager.sol";
 /**
  * @title IPFSManager
  * @author Andrea Tedesco (@andreatedesco).
- * @dev Manages IPFS interactions for creating metadata, including NFT and contract metadata.
+ * @dev Manages IPFS interactions for creating NFT and contract metadata.
  */
 contract IPFSManager is FunctionsClient, Ownable, IIPFSManager {
     using FunctionsRequest for FunctionsRequest.Request;

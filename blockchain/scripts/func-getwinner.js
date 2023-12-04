@@ -1,8 +1,7 @@
 const titleId = '3EA44';
-const statisticName = 'enemiesKilled';
+const statisticName = 'level';
 const startPosition = 0;
 const maxResultsCount = 1;
-const encodedProfileConstraints = encodeURIComponent(JSON.stringify({ ShowLinkedAccounts: true }));
 const getLeaderboardUrl = `https://${titleId}.playfabapi.com/Server/GetLeaderboard?StatisticName=${statisticName}&StartPosition=${startPosition}&MaxResultsCount=${maxResultsCount}`;
 const getUserAccountInfoUrl = `https://${titleId}.playfabapi.com/Server/GetUserAccountInfo`;
 
