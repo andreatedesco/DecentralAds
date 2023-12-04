@@ -82,7 +82,6 @@ async function main() {
     Contract = await Factory.connect(signer).deploy();
     adsPriceFeedManagerAddres = (await Contract.deployed()).address;
     console.log("PriceFeedManager deployed to:", adsPriceFeedManagerAddres);
-
   }
 
   if(deployAdsManagerContracts){
@@ -139,7 +138,6 @@ async function main() {
 
     Factory = await hre.ethers.getContractFactory("AdsManager");
     Contract = await Factory.attach(adsManagerAddress);
-    // Transaction = await Contract.currentSupply();
     adsFactoryAddress = await Contract.getFactories(0, 1);
     console.log("Get Ads Factories: [ " + adsFactoryAddress + " ]");
 
