@@ -33,4 +33,4 @@ if (apiResponse.error) {
   throw new Error(`message: ${apiResponse.message} code: ${apiResponse.code} response: ${JSON.stringify(apiResponse.response)}`);
 }
 
-return Functions.encodeString(`https://ipfs.io/ipfs/${apiResponse.data.IpfsHash}`); "
+return Functions.encodeString(`https://ipfs.io/ipfs/${apiResponse.data.IpfsHash}`);
