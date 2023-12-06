@@ -9,11 +9,11 @@ async function main() {
 
   // ================================================ //
 
-  const deployAdsGatewayContracts = true;
-  const deployIPFSManagerContract = true;
-  const deployLotteryManagerContract = true;
-  const deployPriceFeedManagerContract = true;
-  const deployAdsManagerContracts = true;
+  const deployAdsGatewayContracts = false;
+  const deployIPFSManagerContract = false;
+  const deployLotteryManagerContract = false;
+  const deployPriceFeedManagerContract = false;
+  const deployAdsManagerContracts = false;
 
   const updateIPFSManager = false;
   const updatePriceFeedManager = false;
@@ -21,9 +21,9 @@ async function main() {
   const addAdsFactory = false;
   const getAdsFactories = false;
 
-  const addAdv = false;
-  const buyAdv = false;
-  const getAdv = false;
+  const addAd = false;
+  const buyAd = false;
+  const getAd = false;
 
   const addLottery = false;
   const buyTicket = false;
@@ -122,11 +122,11 @@ async function main() {
     Contract = await Factory.attach(adsManagerAddress);
 
     var name = "Name";
-    var symbol = "NNN";
+    var symbol = "S";
     var description = "Description";
-    var logo = "https://www.onchainconsole.com/TemplateData/logo.png";
-    var banner = "https://www.onchainconsole.com/TemplateData/logo.png";
-    var link = "https://www.onchainconsole.com/";
+    var logo = "https://raw.githubusercontent.com/andreatedesco/DecentralAds/main/demo/assets/images/games/game-00.jpg";
+    var banner = "https://raw.githubusercontent.com/andreatedesco/DecentralAds/main/demo/assets/images/games/game-00.jpg";
+    var link = "https://www.linkedin.com/in/andrea-tedesco-041858199//";
     var royalty = 200;
 
     Transaction = await Contract.createFactory(name, symbol, description, logo, banner, link, royalty);
@@ -148,7 +148,7 @@ async function main() {
     console.log("Get Ads Factories Uri: " + Transaction);
   }
 
-  if(addAdv){
+  if(addAd){
     Factory = await hre.ethers.getContractFactory("AdsFactory");
     Contract = await Factory.attach(adsFactoryAddress);
 
@@ -160,14 +160,14 @@ async function main() {
     console.log("Added Adv");
   }
 
-  if(buyAdv){
-    if(addAdv) wait(5000);
+  if(buyAd){
+    if(addAd) wait(5000);
 
     var id = 0;
     var name =  "Name #" + id;
     var description = "Descrption #" + id;
-    var image = "https://www.tilesonchain.com/assets/images/creatorTile.png";
-    var url = "https://www.onchainconsole.com";
+    var image = "https://raw.githubusercontent.com/andreatedesco/DecentralAds/main/demo/assets/images/games/game-00.jpg";
+    var url = "https://www.linkedin.com/in/andrea-tedesco-041858199/";
 
     Factory = await hre.ethers.getContractFactory("AdsFactory");
     Contract = await Factory.attach(adsFactoryAddress);
@@ -175,8 +175,8 @@ async function main() {
     console.log("Minted Adv");
   }
 
-  if(getAdv){
-    if(buyAdv) wait(5000);
+  if(getAd){
+    if(buyAd) wait(5000);
 
     var id = 0;
     Factory = await hre.ethers.getContractFactory("AdsFactory");
@@ -190,8 +190,8 @@ async function main() {
     Contract = await Factory.attach(adsFactoryAddress);
 
     var price = 0;
-    var width = 10;
-    var height = 20;
+    var width = 200;
+    var height = 300;
     var ticketAmount = 3;
 
     Transaction = await Contract.addAd(price, width, height, ticketAmount, "0x0000000000000000000000000000000000000000");
@@ -210,12 +210,11 @@ async function main() {
   }
 
   if(claimAd){
-
     var id = 1;
-    var name =  "CIAO CIAO #" + id;
+    var name =  "Name #" + id;
     var description = "Descrption #" + id;
-    var image = "https://www.tilesonchain.com/assets/images/creatorTile.png";
-    var url = "https://www.onchainconsole.com";
+    var image = "https://raw.githubusercontent.com/andreatedesco/DecentralAds/main/demo/assets/images/games/game-00.jpg";
+    var url = "https://www.linkedin.com/in/andrea-tedesco-041858199/";
 
     Factory = await hre.ethers.getContractFactory("AdsFactory");
     Contract = await Factory.attach(adsFactoryAddress);
@@ -227,8 +226,8 @@ async function main() {
     var id = 0;
     var name =  "ad";
     var description = "Descrption #" + id;
-    var image = "https://jyammagames.com/wp-content/uploads/2021/02/COWZUUKA-LOGODEF-1024x486.png";
-    var url = "https://www.onchainconsole.com";
+    var image = "https://raw.githubusercontent.com/andreatedesco/DecentralAds/main/demo/assets/images/games/game-01.jpg";
+    var url = "https://www.linkedin.com/in/andrea-tedesco-041858199/";
 
     Factory = await hre.ethers.getContractFactory("AdsFactory");
     Contract = await Factory.attach(adsFactoryAddress);
