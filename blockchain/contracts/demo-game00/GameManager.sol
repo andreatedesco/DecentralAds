@@ -39,15 +39,14 @@ contract GameManager is
     bool public nftsSended;
 
     // ERC721 contract instance representing the NFT factory.
-    IERC721 public factory =
-        IERC721(0xD8bdB0e3832607451e351Fd2CE8A805e2653598d);
+    IERC721 public factory;
 
     // Subscription ID for Chainlink Functions.
-    uint64 public subscriptionId = 1515;
+    uint64 public subscriptionId = 1750;
 
     // Encrypted secrets for secure data transmission.
     bytes public encryptedSecretsUrls =
-        hex"1e9ce0fe8dc86ffbb0e3511f190d8f7703f26b8a425447b37518e52a69f30ee69395d5d5613761ee019fa13949aea7cd6ca33c7e784895e7229642c52f556297fe4b467dc2014656d4642a7d358fc50735cd038d22aa01b56b3cd1ab3f40c1e472a19ba51d9727caee09f1ff7000586f589205b8eb9d27788488253e5f740770d54ccb9443a8c78b6143c4fd917bbf161a";
+        hex"3e1d02d274f82e20df6b75193cc7b9d202d3e1841dee24913f2d5c5efb3c51bb813aba0b77e269b8c94106c394e311fa6ec2916704e1f2aed1ad9ee11e7891ebd0afe6fc6c11a6dfa63aa590539fe38e25f88ec5da2103d0f809026288dba6ce49f3e643feebd856a47ab4a98f92449cf3b8fc5fd538ed09e7595df512c2b2c285af7ce9cdfc605cf16f376dc530e5f749";
 
     // The router address for Chainlink requests.
     address public router = 0xA9d587a00A31A52Ed70D6026794a8FC5E2F5dCb0;
@@ -113,8 +112,13 @@ contract GameManager is
 
     /**
      * @dev Constructor that sets the router address and initializes FunctionsClient.
+     * @param factory_ The address of the factory contract.
      */
-    constructor() FunctionsClient(router) Ownable(_msgSender()) {}
+    constructor(
+        address factory_
+    ) FunctionsClient(router) Ownable(_msgSender()) {
+        factory = IERC721(factory_);
+    }
 
     function checkUpkeep(
         bytes calldata /* checkData */

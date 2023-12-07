@@ -3,15 +3,9 @@ require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 
 const { 
-  API_URL_MUMBAI, 
-  API_URL_ZKEVMTESTNET,
-  API_URL_FUJI,
-  API_URL_AVATESTNET, 
-  POLYGONSCAN_API_KEY, 
-  ZKEVM_POLYGONSCAN_API_KEY, 
+  PRIVATE_KEY, 
+  FUJI_API_URL,
   FUJI_API_KEY, 
-  AVATESTNET_API_KEY,
-  PRIVATE_KEY 
 } = process.env;
 
 module.exports = {
@@ -28,56 +22,19 @@ module.exports = {
     artifacts: "./src/artifacts",
   },
   networks: {
-    zkEVMTestnet: {
-      url: API_URL_ZKEVMTESTNET,
-      accounts: 
-      [
-        PRIVATE_KEY,
-      ],
-    },
-    mumbai: {
-      url: API_URL_MUMBAI,
-      accounts: 
-      [
-        PRIVATE_KEY,
-      ],
-    },
-    fuji: {
-      url: API_URL_FUJI,
-      accounts: 
-      [
-        PRIVATE_KEY,
-      ],
-    },
-    avatestnet: {
-      url: API_URL_AVATESTNET,
-      accounts: 
-      [
-        PRIVATE_KEY,
-      ],
-    },
-    avalancheFujiTestnet: {
-      url: API_URL_FUJI,
-      accounts: 
-      [
-        PRIVATE_KEY,
-      ],
-    },
     snowtrace: {
-      url: API_URL_FUJI,
-      accounts: 
-      [
-        PRIVATE_KEY,
-      ],
+      url: FUJI_API_URL,
+      accounts: [PRIVATE_KEY],
+
+      adsIPFSManager: "0xa2E386d7a0008CE873101d461699890F31bE6D88",
+      adsLotteryManager: "0xB1D899966c6A5BB4c318A0D7750CE96eD83C0128",
+      adsPriceFeedManager: "0xbC61427f46F928C2e94A39B5c024381d0A36314c",
+      adsManager: "0x809Ac5D87560ef10dda69A9317688A4A61e8C56e",
+      adsFactory: "0x5f40A5B3d486432f51718E5aCc2668B987d44dA5",
     },
   },
   etherscan: {
     apiKey: {
-        polygonMumbai: POLYGONSCAN_API_KEY,
-        // zkEVMTestnet: ZKEVM_POLYGONSCAN_API_KEY,
-        // fuji: FUJI_API_KEY,
-        // avatestnet: AVATESTNET_API_KEY,
-        avalancheFujiTestnet: FUJI_API_KEY,
         snowtrace: FUJI_API_KEY,
     },
     customChains: [

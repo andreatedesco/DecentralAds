@@ -36,7 +36,7 @@ const generateOffchainSecretsFile = async () => {
   await secretsManager.initialize();
   // secrets file path
   const rootDir = process.cwd();
-  const secretsFilePath = path.resolve(rootDir, "offchain-secrets-fuji.json");
+  const secretsFilePath = path.resolve(rootDir, "offchain-secrets.json");
 
   // Encrypt secrets
   const encryptedSecretsObj = await secretsManager.encryptSecrets(
