@@ -9,7 +9,7 @@ const generateOffchainSecretsFile = async () => {
   const routerAddress = "0xA9d587a00A31A52Ed70D6026794a8FC5E2F5dCb0";
   const donId = "fun-avalanche-fuji-1";
 
-  const secrets = { pinataJWT: process.env.PINATA_JWT, playfabApiKey: process.env.PLAYFAB_API_KEY };
+  const secrets = { playfabApiKey: process.env.PLAYFAB_API_KEY };
 
   // Initialize ethers signer and provider to interact with the contracts onchain
   const privateKey = process.env.PRIVATE_KEY; // fetch PRIVATE_KEY
@@ -36,7 +36,7 @@ const generateOffchainSecretsFile = async () => {
   await secretsManager.initialize();
   // secrets file path
   const rootDir = process.cwd();
-  const secretsFilePath = path.resolve(rootDir, "offchain-secrets-fuji.json");
+  const secretsFilePath = path.resolve(rootDir, "demo-offchain-secrets.json");
 
   // Encrypt secrets
   const encryptedSecretsObj = await secretsManager.encryptSecrets(
