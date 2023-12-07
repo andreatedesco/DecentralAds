@@ -7,6 +7,7 @@ using Nethereum.Contracts;
 using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Unity.Rpc;
 using Nethereum.RPC.Eth.DTOs;
+using Nethereum.Unity.Metamask;
 
 namespace DecentralAds
 {
