@@ -173,8 +173,6 @@ contract GameManager is
         // Transfers NFTs to the winner.
         factory.safeTransferFrom(address(this), winner, 0);
         factory.safeTransferFrom(address(this), winner, 1);
-        factory.safeTransferFrom(address(this), winner, 2);
-        factory.safeTransferFrom(address(this), winner, 3);
 
         emit ChallengeFulfilled(winner, err);
     }
