@@ -30,7 +30,7 @@ module.exports = {
       adsLotteryManager: "0xB1D899966c6A5BB4c318A0D7750CE96eD83C0128",
       adsPriceFeedManager: "0xbC61427f46F928C2e94A39B5c024381d0A36314c",
       adsManager: "0x809Ac5D87560ef10dda69A9317688A4A61e8C56e",
-      adsFactory: "0x5f40A5B3d486432f51718E5aCc2668B987d44dA5",
+      adsFactory: "0xDdaa6748e6a300F1BDfBB170497EA67FF956e6B7",
     },
   },
   etherscan: {

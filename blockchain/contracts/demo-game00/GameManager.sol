@@ -32,8 +32,8 @@ contract GameManager is
     // Address of the winner of the challenge.
     address public winner;
 
-    // End date for the challenge in UNIX timestamp format (20 December 2023 16:00:00 GMT).
-    uint256 public endDate = 1703088000;
+    // End date for the challenge in UNIX timestamp format (20 December 2023 22:00:00 UTC).
+    uint256 public endDate = 1703109600;
 
     // Flag indicating whether NFTs have been sent.
     bool public nftsSended;

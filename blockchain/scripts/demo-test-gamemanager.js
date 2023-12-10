@@ -21,8 +21,8 @@ async function main() {
   // ================================================ //
 
   var gameManagerContractName = "GameManager";
-  var gameManagerAddress = "0xC0caCB50ED1a94B91a56318775d9c3551059E4e8";
-  var adsFactoryAddress = "0x63204446BFB5da74dbF3dF2c50Be86DaBE385359";
+  var gameManagerAddress = "0x3f23Ea52f1bf45E6766eD60C4317a036485d5F50";
+  var adsFactoryAddress = "0xDdaa6748e6a300F1BDfBB170497EA67FF956e6B7";
   
   const source = fs
   .readFileSync(path.resolve("scripts", "func-getwinner.js"))
