@@ -22,7 +22,7 @@ async function main() {
 
   var gameManagerContractName = "GameManager";
   var gameManagerAddress = "0xC0caCB50ED1a94B91a56318775d9c3551059E4e8";
-  var adsFactoryAddress = "0x80B76F37e317C7Bd222A84fb3871dCB8fCD510c2";
+  var adsFactoryAddress = "0x63204446BFB5da74dbF3dF2c50Be86DaBE385359";
   
   const source = fs
   .readFileSync(path.resolve("scripts", "func-getwinner.js"))
@@ -70,7 +70,7 @@ async function main() {
     Factory = await hre.ethers.getContractFactory("AdsFactory");
     Contract = await Factory.attach(adsFactoryAddress);
 
-    for(i = 0; i < 4; ++i){
+    for(i = 0; i < 2; ++i){
       Transaction = await Contract.connect(signer).transferFrom(signer.address, gameManagerAddress, i);
       console.log("Sended NFT: ", i);
     }
