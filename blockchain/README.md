@@ -1,1 +1,0 @@
-# DecentralAds - Blockchain
