@@ -40,7 +40,7 @@ For winner selection in lotteries, I used [Chainlink VRF](https://github.com/and
 
 ![Alt text](https://raw.githubusercontent.com/andreatedesco/DecentralAds/main/presentation/Presentation_09.png)
 
-Finally, I utilized [Chainlink Automation](https://github.com/andreatedesco/DecentralAds/blob/main/blockchain/contracts/demo-game00/GameManager.sol) to trigger, at the start of the closing ceremony (Dec. 20, 2023), the sending of the 2 DAd of the presentation game, to the first place winner, selected through the Playfab rankings using Chainlink Functions.
+Finally, I utilized [Chainlink Automation](https://github.com/andreatedesco/DecentralAds/blob/main/blockchain/contracts/demo-game/GameManager.sol) to trigger, at the start of the closing ceremony (Dec. 20, 2023), the sending of the 2 DAd of the presentation game, to the first place winner, selected through the Playfab rankings using Chainlink Functions.
 
 ![Alt text](https://raw.githubusercontent.com/andreatedesco/DecentralAds/main/presentation/Presentation_13.png)
 
